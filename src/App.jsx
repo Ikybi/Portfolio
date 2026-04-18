@@ -223,17 +223,17 @@ function MobileBar({ page, setPage }) {
       className="mobile-bar"
       style={{
         position: "fixed",
-        bottom: 16, // ← staccata dal bordo come la sidebar (left: 16)
+        bottom: 16,
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: 200,
         background: T.sidebar,
-        borderRadius: 20, // ← stesso border radius pill
+        borderRadius: 20,
         border: `1px solid ${T.cardBorder}`,
-        padding: "0.55rem", // ← stesso padding
+        padding: "0.55rem",
         display: "none",
-        flexDirection: "row", // ← orizzontale invece di verticale
-        gap: "0.2rem", // ← stesso gap
+        flexDirection: "row",
+        gap: "0.2rem",
       }}
     >
       {SIDEBAR_ICONS.map((item) => {
@@ -247,7 +247,7 @@ function MobileBar({ page, setPage }) {
               window.scrollTo(0, 0);
             }}
             style={{
-              width: 38, // ← identico alla sidebar
+              width: 38,
               height: 38,
               borderRadius: 12,
               border: "none",
@@ -505,11 +505,19 @@ function OptionCard({ letter, text, onClick }) {
    WORK PAGE
    ═══════════════════════════════════════════════════════════════ */
 function WorkPage() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div
       style={{
         minHeight: "100vh",
-        padding: "5rem 5rem 4rem",
+        padding: isMobile ? "3rem 1.5rem 4rem" : "5rem 5rem 4rem",
         maxWidth: 1000,
         margin: "0 auto",
       }}
@@ -531,7 +539,7 @@ function WorkPage() {
       <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
         {PROJECTS.map((p, i) => (
           <Reveal key={i} delay={i * 130}>
-            <ProjectCard project={p} />
+            <ProjectCard project={p} isMobile={isMobile} />
           </Reveal>
         ))}
       </div>
@@ -539,7 +547,7 @@ function WorkPage() {
   );
 }
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, isMobile }) {
   const [h, setH] = useState(false);
   return (
     <div
@@ -547,7 +555,7 @@ function ProjectCard({ project }) {
       onMouseLeave={() => setH(false)}
       style={{
         display: "grid",
-        gridTemplateColumns: "1fr 1.1fr",
+        gridTemplateColumns: isMobile ? "1fr" : "1fr 1.1fr", // ← verticale su mobile
         borderRadius: 18,
         overflow: "hidden",
         background: T.card,
@@ -556,9 +564,10 @@ function ProjectCard({ project }) {
         transform: h ? "translateY(-3px)" : "none",
       }}
     >
+      {/* Pannello colorato — più basso su mobile */}
       <div
         style={{
-          minHeight: 250,
+          minHeight: isMobile ? 160 : 250, // ← meno alto su mobile
           background: project.gradient,
           display: "flex",
           alignItems: "center",
@@ -577,9 +586,11 @@ function ProjectCard({ project }) {
           {project.title.split(" ")[0]}
         </span>
       </div>
+
+      {/* Testo */}
       <div
         style={{
-          padding: "2rem",
+          padding: isMobile ? "1.4rem" : "2rem", // ← padding ridotto su mobile
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
