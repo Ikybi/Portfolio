@@ -1148,7 +1148,7 @@ function BlogPage() {
             fontFamily: T.font,
             fontSize: "0.92rem",
             color: T.muted,
-            marginBottom: "3rem",
+            marginBottom: "1.5rem",
             lineHeight: 1.7,
           }}
         >
