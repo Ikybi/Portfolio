@@ -287,7 +287,7 @@ function HomePage({ setPage }) {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        padding: "0.1rem 2rem 4rem",
+        padding: "0.1rem 2rem 6rem",
       }}
     >
       <div
@@ -1109,11 +1109,19 @@ function ContactBtn({ icon, label, href }) {
    BLOG PAGE (placeholder)
    ═══════════════════════════════════════════════════════════════ */
 function BlogPage() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div
       style={{
         minHeight: "100vh",
-        padding: "5rem 5rem 4rem",
+        padding: isMobile ? "3rem 1.5rem 4rem" : "5rem 5rem 4rem", // ← padding ridotto su mobile
         maxWidth: 1000,
         margin: "0 auto",
       }}
@@ -1154,9 +1162,9 @@ function BlogPage() {
                 background: T.card,
                 border: `1px solid ${T.cardBorder}`,
                 borderRadius: 18,
-                padding: "1.8rem 2rem",
+                padding: isMobile ? "1.2rem 1.2rem" : "1.8rem 2rem", // ← padding ridotto su mobile
                 display: "flex",
-                gap: "1.5rem",
+                gap: "1rem",
                 alignItems: "flex-start",
               }}
             >
@@ -1167,15 +1175,17 @@ function BlogPage() {
                   width: 8,
                   height: 8,
                   borderRadius: "50%",
-                  background: item.status === "In corso" ? "#22c55e" : T.muted,
+                  background: item.status === "Ongoing" ? "#22c55e" : T.muted,
                   flexShrink: 0,
                   boxShadow:
-                    item.status === "In corso"
+                    item.status === "Ongoing"
                       ? "0 0 8px rgba(34,197,94,0.6)"
                       : "none",
                 }}
               />
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                {" "}
+                {/* minWidth:0 evita overflow */}
                 <div
                   style={{
                     display: "flex",
@@ -1188,7 +1198,7 @@ function BlogPage() {
                   <h3
                     style={{
                       fontFamily: T.serif,
-                      fontSize: "1.25rem",
+                      fontSize: isMobile ? "1.1rem" : "1.25rem", // ← più piccolo su mobile
                       fontWeight: 400,
                       fontStyle: "italic",
                       color: T.text,
@@ -1204,10 +1214,10 @@ function BlogPage() {
                       padding: "0.15rem 0.5rem",
                       borderRadius: 50,
                       background:
-                        item.status === "In corso"
+                        item.status === "Ongoing"
                           ? "rgba(34,197,94,0.1)"
                           : "rgba(255,255,255,0.06)",
-                      color: item.status === "In corso" ? "#22c55e" : T.muted,
+                      color: item.status === "Ongoing" ? "#22c55e" : T.muted,
                       textTransform: "uppercase",
                       letterSpacing: "0.08em",
                     }}
