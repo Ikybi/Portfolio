@@ -1008,7 +1008,7 @@ function ContactPage() {
             background: T.card,
             border: `1px solid ${T.cardBorder}`,
             borderRadius: 22,
-            padding: "1.5rem 3rem",
+            padding: "1.5rem 2rem",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -1041,7 +1041,9 @@ function ContactPage() {
           >
             Mick
           </h2>
-          <p style={{ fontFamily: T.font, fontSize: "0.8rem", color: T.muted }}>
+          <p
+            style={{ fontFamily: T.font, fontSize: "0.75rem", color: T.muted }}
+          >
             Computer Engineer & AI Enthusiast
           </p>
           <div
@@ -1268,7 +1270,7 @@ function BlogPage() {
             fontFamily: T.font,
             fontSize: "0.8rem",
             color: T.subtle,
-            marginTop: "2.5rem",
+            marginTop: "1.5rem",
             textAlign: "center",
           }}
         >
